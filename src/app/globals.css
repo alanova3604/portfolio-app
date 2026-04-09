@@ -1,12 +1,8 @@
-@import url('https://fonts.googleapis.com/css2?family=Instrument+Sans:ital,wght@0,400..700;1,400..700&display=swap');
-
 @import "tailwindcss";
 
 @theme {
-  /* In v4, you define variables directly */
-  --font-instrument: "Instrument Sans", ui-sans-serif, system-ui, sans-serif;
-
-  /* Map it to the default sans font if you want it everywhere */
+  /* Use the CSS variable defined in layout.tsx via next/font/google */
+  --font-instrument: var(--font-instrument), ui-sans-serif, system-ui, sans-serif;
   --font-family-sans: var(--font-instrument);
 
   /* Overriding Tailwind breakpoints to match Bootstrap exactly */
@@ -23,25 +19,60 @@
   --color-border: var(--border);
   --color-muted: var(--muted);
   --color-primary: var(--primary);
+
+  /* Typography Design Tokens */
+  --letter-spacing-tight: -0.02em;
+  --letter-spacing-tighter: -0.05em;
+  
+  --font-size-hero: 48px;
+  --font-size-section: 32px;
+  --font-size-card: 18px;
 }
 
 :root {
-  --background: #0a0a0a;
-  --foreground: #ededed;
-  --card: #151515;
+  --background: #000000; /* Pure Black as per Figma */
+  --foreground: #ffffff;
+  --card: #121212;
   --border: #262626;
-  --muted: #a1a1aa;
-  --primary: #60a5fa;
+  --muted: #a1a1aa; /* Zinc-400 */
+  --primary: #007AFF; /* Electric Blue as per Figma */
 }
 
 @layer base {
   body {
-    /* Use the variable defined in your theme */
     font-family: var(--font-instrument);
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     background-color: var(--background);
     color: var(--foreground);
+    line-height: 1.6;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    font-weight: 600;
+    line-height: 1.2;
+    letter-spacing: var(--letter-spacing-tight);
+    color: var(--foreground);
+  }
+
+  h1 { font-size: var(--font-size-hero); }
+  h2 { font-size: var(--font-size-section); }
+  
+  p {
+    color: var(--muted);
+    font-size: 1rem;
+    line-height: 1.6;
+  }
+
+  /* Decorative technical text style */
+  .text-decorative {
+    font-size: 140px;
+    font-weight: 800;
+    letter-spacing: var(--letter-spacing-tighter);
+    color: rgba(255, 255, 255, 0.05);
+    line-height: 1;
+    pointer-events: none;
+    user-select: none;
   }
 }
 
