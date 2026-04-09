@@ -1,0 +1,25 @@
+.navbar{
+
+  nav, .name{
+    transition: all 0.3s ease;
+    transform-origin: left;
+    white-space: nowrap;
+  }
+
+
+  &.active{
+    width: 150px;
+
+    nav, .name{
+      transform: scaleX(0);
+      opacity: 0;
+      visibility: 0;
+      width: 0;
+    }
+    .icon{
+      position: absolute;
+      left: 22px;
+      bottom: -8px;
+    }
+  }
+}

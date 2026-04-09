@@ -1,26 +1,62 @@
+@import url('https://fonts.googleapis.com/css2?family=Instrument+Sans:ital,wght@0,400..700;1,400..700&display=swap');
+
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
+@theme {
+  /* In v4, you define variables directly */
+  --font-instrument: "Instrument Sans", ui-sans-serif, system-ui, sans-serif;
 
-@theme inline {
+  /* Map it to the default sans font if you want it everywhere */
+  --font-family-sans: var(--font-instrument);
+
+  /* Overriding Tailwind breakpoints to match Bootstrap exactly */
+  --breakpoint-sm: 576px;
+  --breakpoint-md: 768px;
+  --breakpoint-lg: 992px;
+  --breakpoint-xl: 1200px;
+  --breakpoint-2xl: 1400px;
+
+  /* Custom theme colors */
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --color-card: var(--card);
+  --color-border: var(--border);
+  --color-muted: var(--muted);
+  --color-primary: var(--primary);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+:root {
+  --background: #0a0a0a;
+  --foreground: #ededed;
+  --card: #151515;
+  --border: #262626;
+  --muted: #a1a1aa;
+  --primary: #60a5fa;
+}
+
+@layer base {
+  body {
+    /* Use the variable defined in your theme */
+    font-family: var(--font-instrument);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    background-color: var(--background);
+    color: var(--foreground);
   }
 }
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+@layer components {
+  .container {
+    width: 100%;
+    margin-right: auto;
+    margin-left: auto;
+    padding-right: 1rem;
+    padding-left: 1rem;
+
+    @media (min-width: 576px) { max-width: 540px; }
+    @media (min-width: 768px) { max-width: 720px; }
+    @media (min-width: 992px) { max-width: 960px; }
+    @media (min-width: 1200px) { max-width: 1140px; }
+    @media (min-width: 1400px) { max-width: 1320px; }
+  }
 }

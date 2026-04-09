@@ -1,65 +1,91 @@
-import Image from "next/image";
+"use client";
+import {Icon} from "@iconify/react";
+import { motion } from "motion/react";
+import EnterAnimation from "@/components/animate/EnterAnimation";
+import Projects from "@/components/Projects";
+import { useState } from "react";
 
-export default function Home() {
-  return (
-    <div className="flex flex-col flex-1 items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-      <main className="flex flex-1 w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
-        />
-        <div className="flex flex-col items-center gap-6 text-center sm:items-start sm:text-left">
-          <h1 className="max-w-xs text-3xl font-semibold leading-10 tracking-tight text-black dark:text-zinc-50">
-            To get started, edit the page.tsx file.
-          </h1>
-          <p className="max-w-md text-lg leading-8 text-zinc-600 dark:text-zinc-400">
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Learning
-            </a>{" "}
-            center.
-          </p>
-        </div>
-        <div className="flex flex-col gap-4 text-base font-medium sm:flex-row">
-          <a
-            className="flex h-12 w-full items-center justify-center gap-2 rounded-full bg-foreground px-5 text-background transition-colors hover:bg-[#383838] dark:hover:bg-[#ccc] md:w-[158px]"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={16}
-            />
-            Deploy Now
-          </a>
-          <a
-            className="flex h-12 w-full items-center justify-center rounded-full border border-solid border-black/[.08] px-5 transition-colors hover:border-transparent hover:bg-black/[.04] dark:border-white/[.145] dark:hover:bg-[#1a1a1a] md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Documentation
-          </a>
-        </div>
-      </main>
-    </div>
-  );
+function Home() {
+    const [openProjects, setOpenProjects] = useState(false);
+
+    return (
+        <motion.div
+            className="w-full h-full"
+            initial={{ x: 3000 }}
+            animate={{ x: 0 }}
+            exit= {{ x: 3000, opacity: 0 }}
+            transition={{
+                duration: .2,
+                ease: "easeOut"
+            }}>
+
+            {openProjects ? (
+                <Projects />
+            ) : (
+                <div className="flex flex-col justify-between h-full min-h-[80vh] px-6 py-10 md:py-[65px] md:pl-[65px]">
+
+                    <div>
+                        <div className="text-[42px] sm:text-[60px] lg:text-[90px] xl:text-[100px] font-semibold leading-[1.1] md:leading-[1.2] tracking-tight text-foreground transition-colors duration-300">
+                            <EnterAnimation className="inline-block" tag="span" duration={.1}>
+                                Designing
+                            </EnterAnimation>
+                            {' '}
+                            <EnterAnimation tag="span" duration={.2}>
+                                intuitive
+                            </EnterAnimation>
+                            {' '}
+                            <EnterAnimation tag="span" duration={.3}>
+                                experiences
+                            </EnterAnimation>
+                            {' '}
+                            <EnterAnimation tag="span" duration={.4}>
+                                with
+                            </EnterAnimation>
+                            {' '}
+                            <EnterAnimation tag="span" duration={.5}>
+                                a
+                            </EnterAnimation>
+                            {' '}
+                            <EnterAnimation tag="span" duration={.6}>
+                                Front-end
+                            </EnterAnimation>
+                            {' '}
+                            <EnterAnimation tag="span" duration={.7}>
+                                vision.
+                            </EnterAnimation>
+                        </div>
+
+                        <div className="text-sm md:text-[14px] my-6 md:my-5 text-muted font-medium transition-colors duration-300">
+                            Stack: Vue.js 3 • Tailwind CSS • Figma • Laravel • React • Adobe
+                        </div>
+
+                        <div className="text-lg md:text-[20px] max-w-full md:max-w-[1120px] mt-2 leading-relaxed md:leading-[1.8] text-foreground/80 dark:text-foreground/70 transition-colors duration-300">
+                            <EnterAnimation tag="div" duration={.8}>
+                                I’m Alan Alcalá, a UX Designer and Front-End Developer focused on creating digital products that are functional,
+                            </EnterAnimation>
+                            <EnterAnimation tag="div" duration={.9}>
+                                aesthetic, and easy to use. Explore my projects to see how I transform ideas into interactive, user-centered experiences.
+                            </EnterAnimation>
+                        </div>
+                    </div>
+
+                    <div className="mt-12 md:mt-auto">
+                        <EnterAnimation tag="div" duration={1.1}>
+                            <motion.button
+                                onClick={() => setOpenProjects(true)}
+                                className="text-2xl md:text-[40px] text-primary font-bold flex items-center gap-3 md:gap-4 group cursor-pointer transition-colors duration-300"
+                                whileHover={{ x: 10 }}
+                                whileTap={{ scale: 0.95 }}
+                            >
+                                View my work
+                                <Icon className="text-4xl md:text-5xl mt-[3px] transition-transform group-hover:rotate-45" icon="line-md:arrow-right-circle" />
+                            </motion.button>
+                        </EnterAnimation>
+                    </div>
+                </div>
+            )}
+        </motion.div>
+    )
 }
+
+export default Home;
