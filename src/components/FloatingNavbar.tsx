@@ -16,14 +16,15 @@ const FloatingNavbar = () => {
 
   return (
     <div className="fixed top-6 left-1/2 -translate-x-1/2 z-50">
-      <nav className="h-16 px-4 py-2 bg-black/40 border border-border rounded-[30px] backdrop-blur-xl flex justify-center items-center gap-2 sm:gap-7 transition-all duration-300">
+      {/* Primary Navigation Pill */}
+      <nav className="h-16 px-3 py-2 bg-white/[0.05] rounded-[30px] backdrop-blur-2xl flex justify-center items-center gap-1 sm:gap-2 transition-all duration-300 shadow-2xl">
         {navItems.map((item) => {
           const isActive = pathname === item.href;
           return (
             <Link
               key={item.href}
               href={item.href}
-              className={`relative w-36 h-10 flex justify-center items-center gap-2.5 rounded-full transition-all duration-300 hover:bg-white/5 group`}
+              className="relative px-6 h-full flex justify-center items-center gap-2.5 rounded-full transition-all duration-300 hover:bg-white/5 group"
             >
               {isActive && (
                 <motion.span
@@ -32,18 +33,15 @@ const FloatingNavbar = () => {
                   transition={{ type: "spring", stiffness: 380, damping: 30 }}
                 />
               )}
-              
-              <div className="w-6 h-6 flex items-center justify-center relative z-10">
-                <Icon
-                  icon={isActive ? item.activeIcon : item.icon}
-                  className={`text-xl transition-all duration-300 ${
-                    isActive ? "text-white" : "text-white/60 group-hover:text-white"
-                  }`}
-                />
-              </div>
+              <Icon
+                icon={isActive ? item.activeIcon : item.icon}
+                className={`text-xl transition-all duration-300 ${
+                  isActive ? "text-white" : "text-slate-400 group-hover:text-white"
+                }`}
+              />
               <span
-                className={`text-sm sm:text-base font-semibold font-instrument capitalize leading-5 transition-all duration-300 relative z-10 ${
-                  isActive ? "text-white" : "text-white/60 group-hover:text-white"
+                className={`text-sm font-semibold tracking-tight leading-5 transition-all duration-300 relative z-10 hidden md:block ${
+                  isActive ? "text-white" : "text-slate-400 group-hover:text-white"
                 }`}
               >
                 {item.label}

@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Instrument_Sans } from "next/font/google";
 import "./globals.css";
 import FloatingNavbar from "@/components/FloatingNavbar";
+import SocialLinks from "@/components/SocialLinks";
 import PageWrapper from "@/components/PageWrapper";
 
 const instrumentSans = Instrument_Sans({
@@ -28,6 +29,7 @@ export default function RootLayout({
     >
       <body className="min-h-full flex flex-col font-sans transition-colors duration-300 bg-background text-foreground">
         <FloatingNavbar />
+        <SocialLinks />
         <PageWrapper>
           {children}
         </PageWrapper>
