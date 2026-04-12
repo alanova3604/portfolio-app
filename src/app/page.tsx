@@ -1,12 +1,12 @@
 "use client";
 
-import { useCallback, useEffect } from "react";
+import { useCallback, useEffect, Suspense } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { Icon } from "@iconify/react";
 import { motion, AnimatePresence, LayoutGroup } from "motion/react";
 import GeometricPattern from "@/components/GeometricPattern";
 
-export default function Home() {
+function HomeContent() {
   const headline = "Hi!, this is my portfolio";
   const router = useRouter();
   const searchParams = useSearchParams();
@@ -244,5 +244,13 @@ export default function Home() {
         </span>
       </div>
     </main>
+  );
+}
+
+export default function Home() {
+  return (
+    <Suspense>
+      <HomeContent />
+    </Suspense>
   );
 }
