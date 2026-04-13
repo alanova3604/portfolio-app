@@ -6,7 +6,7 @@ import { Icon } from "@iconify/react";
 import GeometricPattern from "@/components/GeometricPattern";
 
 function Contact() {
-    const headline = "Let's Work Together";
+    const headline = "Start a Strategic Conversation";
     
     // 1. Estados para el formulario, errores y estatus de envío
     const [formData, setFormData] = useState({
@@ -193,7 +193,7 @@ function Contact() {
                                 value={formData.message}
                                 onChange={handleChange}
                                 className="w-full bg-transparent outline-none text-foreground text-lg resize-none"
-                                placeholder="Tell me about your project..."
+                                placeholder="Describe the problem we're solving..."
                             ></textarea>
                         </motion.div>
 
@@ -266,7 +266,7 @@ function Contact() {
             {/* Bottom Decorative Text */}
             <div className="absolute bottom-6 left-0 right-0 text-center pointer-events-none select-none z-0 opacity-[0.03]">
                 <span className="text-[10vw] font-medium tracking-tighter whitespace-nowrap">
-                    Inquiry & Connection.
+                    Vision & Collaboration.
                 </span>
             </div>
         </main>

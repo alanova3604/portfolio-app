@@ -1,13 +1,15 @@
 "use client";
 
-import { useCallback, useEffect, Suspense } from "react";
+import { useCallback, useEffect, Suspense, useMemo } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { Icon } from "@iconify/react";
 import { motion, AnimatePresence, LayoutGroup } from "motion/react";
 import GeometricPattern from "@/components/GeometricPattern";
+import ProjectCard from "@/components/Project";
+import { projects } from "@/data/projects";
 
 function HomeContent() {
-  const headline = "Hi!, this is my portfolio";
+  const headline = "Designing products that bridge user needs and business goals.";
   const router = useRouter();
   const searchParams = useSearchParams();
 
@@ -43,28 +45,32 @@ function HomeContent() {
 
   const services = [
     {
-      title: "Product & SaaS",
-      description: "Designing intuitive workflows and complex systems for web and mobile.",
+      title: "SaaS",
+      description: "Scalable workflows for complex SaaS platforms.",
       icon: "solar:widget-bold-duotone",
     },
     {
-      title: "Growth & E-commerce",
-      description: "Optimizing user journeys to drive conversion and brand loyalty.",
-      icon: "solar:graph-up-bold-duotone",
+      title: "E-commerce",
+      description: "High-conversion storefronts and digital experiences.",
+      icon: "solar:cart-large-minimalistic-bold-duotone",
     },
     {
-      title: "Interactive Systems",
-      description: "Developing 3D logic and high-fidelity prototypes that bridge design and code.",
-      icon: "solar:cpu-bold-duotone",
+      title: "Landing Page",
+      description: "Strategic pages designed to drive action and conversion.",
+      icon: "solar:layers-minimalistic-bold-duotone",
     },
   ];
 
-  // Placeholder project items — replace with real data later
-  const projectItems = Array.from({ length: 6 }, (_, i) => ({ id: i + 1 }));
-
-  const headlineDelay = headline.length * 0.05;
   const selected = services.find((s) => toSlug(s.title) === categoryParam)?.title ?? null;
   const isSelected = selected !== null;
+
+  // Filter projects based on active category
+  const filteredProjects = useMemo(() => {
+    if (!isSelected) return [];
+    return projects.filter(p => p.category === selected);
+  }, [isSelected, selected]);
+
+  const headlineDelay = headline.length * 0.05;
 
   const handleSelect = useCallback(
     (title: string) => {
@@ -132,7 +138,7 @@ function HomeContent() {
                   transition={{ duration: 1, delay: headlineDelay + 0.2 }}
                   className="text-lg md:text-2xl lg:text-3xl font-medium text-slate-500/80"
                 >
-                  Are you looking for one of this?
+                  Solving complex problems through design and craft.
                 </motion.p>
               </motion.div>
 
@@ -211,25 +217,33 @@ function HomeContent() {
                 })}
               </div>
 
-              {/* Project list grid */}
               <motion.div
-                initial={{ opacity: 0, y: 16 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.4, delay: 0.25, ease: "easeOut" }}
-                className="grid grid-cols-2 md:grid-cols-3 gap-4 md:gap-6 flex-1"
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ duration: 0.6, delay: 0.3, ease: "easeOut" }}
+                className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 flex-1 min-h-[400px]"
               >
-                {projectItems.map((item, index) => (
-                  <motion.div
-                    key={item.id}
-                    initial={{ opacity: 0, scale: 0.95 }}
-                    animate={{ opacity: 1, scale: 1 }}
-                    transition={{ duration: 0.35, delay: 0.3 + index * 0.05, ease: "easeOut" }}
-                    className="group relative rounded-2xl bg-white/[0.03] border border-white/5 backdrop-blur-sm overflow-hidden cursor-pointer hover:bg-white/[0.06] hover:border-white/10 transition-all duration-300 aspect-square flex items-center justify-center"
-                  >
-                    <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 bg-gradient-to-br from-white/[0.03] to-transparent" />
-                    <Icon icon="solar:add-square-linear" className="text-2xl text-white/10 group-hover:text-white/20 transition-colors duration-300" />
-                  </motion.div>
-                ))}
+                {filteredProjects.length > 0 ? (
+                  filteredProjects.map((project, index) => (
+                    <ProjectCard 
+                      key={project.slug} 
+                      project={project}
+                      index={index}
+                    />
+                  ))
+                ) : (
+                  <div className="col-span-full py-20 flex flex-col items-center justify-center text-center gap-6">
+                    <div className="w-16 h-16 rounded-full bg-white/5 flex items-center justify-center border border-white/10">
+                      <Icon icon="solar:box-minimalistic-bold-duotone" className="text-3xl text-white/20" />
+                    </div>
+                    <div className="space-y-2">
+                      <h3 className="text-xl font-medium text-white/60">New projects coming soon</h3>
+                      <p className="text-slate-500 max-w-sm mx-auto">
+                        We are currently working on adding new projects to this category. Stay tuned for updates!
+                      </p>
+                    </div>
+                  </div>
+                )}
               </motion.div>
             </motion.div>
           )}
@@ -240,7 +254,7 @@ function HomeContent() {
       {/* Bottom Decorative Text */}
       <div className="absolute bottom-0 left-0 right-0 pointer-events-none select-none z-0 opacity-[0.05]">
         <span className="text-[10vw] font-medium tracking-tighter whitespace-nowrap">
-          Design and Engineering.
+          Architecture & Intuition.
         </span>
       </div>
     </main>

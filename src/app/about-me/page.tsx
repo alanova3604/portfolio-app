@@ -5,28 +5,28 @@ import { Icon } from "@iconify/react";
 import GeometricPattern from "@/components/GeometricPattern";
 
 function AboutMe() {
-    const headline = "Design & Code";
+    const headline = "Strategy & Craft";
 
     const storySections = [
         {
-            title: "Who I Am",
-            content: "UX/UI Designer and Front-End Developer focused on building clear, usable, and scalable digital products."
+            title: "The Mission",
+            content: "I'm a Product Designer & Design Engineer dedicated to building seamless, scalable digital products that empower users."
         },
         {
-            title: "What I Do",
-            content: "I design user-centered interfaces and implement responsive web experiences, from concept to production."
+            title: "The Scope",
+            content: "I architect user-centered interfaces and implement high-performance web experiences from discovery to deployment."
         },
         {
-            title: "My Approach",
-            content: "I focus on clarity, usability, and accessibility, turning complex requirements into intuitive user flows."
+            title: "Philosophy",
+            content: "I treat design as a problem-solving engine. I build cohesive systems where every interaction serves both the user and the bottom line."
         },
         {
             title: "Expertise",
-            content: "Experience working on SaaS platforms, e-commerce products, dashboards, and specialized digital tools."
+            content: "Deep experience in SaaS ecosystems, high-conversion e-commerce, and specialized interactive tools."
         },
         {
-            title: "How I Work",
-            content: "I collaborate closely with stakeholders, iterating quickly and aligning design decisions with business goals."
+            title: "Strategic Partnership",
+            content: "I bridge the gap between business objectives and technical possibility through rapid iteration and radical transparency."
         }
     ];
 
@@ -133,7 +133,7 @@ function AboutMe() {
             {/* Bottom Decorative Text */}
             <div className="absolute bottom-6 left-0 right-0 text-center pointer-events-none select-none z-0 opacity-[0.03]">
                 <span className="text-[10vw] font-medium tracking-tighter whitespace-nowrap">
-                    Background & Philosophy.
+                    Context & Intent.
                 </span>
             </div>
         </main>
