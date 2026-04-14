@@ -12,15 +12,24 @@ interface ProjectCardProps {
 }
 
 export default function ProjectCard({ project, index }: ProjectCardProps) {
+  const cardVariants = {
+    hidden: { opacity: 0, y: 30, scale: 0.95 },
+    visible: { 
+      opacity: 1, 
+      y: 0, 
+      scale: 1,
+      transition: {
+        type: "spring",
+        stiffness: 100,
+        damping: 20,
+        mass: 1
+      }
+    }
+  };
+
   return (
     <motion.div
-      initial={{ opacity: 0, scale: 0.95 }}
-      animate={{ opacity: 1, scale: 1 }}
-      transition={{ 
-        duration: 0.5, 
-        delay: index * 0.1, 
-        ease: "easeOut" 
-      }}
+      variants={cardVariants}
       className="group relative aspect-square rounded-[32px] overflow-hidden bg-white/[0.03] border border-white/5 backdrop-blur-sm cursor-pointer hover:border-white/20 transition-all duration-500"
     >
       <Link href={`/projects/${project.slug}`} className="block w-full h-full">

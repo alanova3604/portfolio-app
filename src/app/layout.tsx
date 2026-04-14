@@ -19,8 +19,10 @@ export const metadata: Metadata = {
 
 export default function RootLayout({
   children,
+  modal,
 }: Readonly<{
   children: React.ReactNode;
+  modal: React.ReactNode;
 }>) {
   return (
     <html
@@ -28,12 +30,13 @@ export default function RootLayout({
       className={`${instrumentSans.variable} h-full antialiased`}
       suppressHydrationWarning
     >
-      <body className="min-h-full flex flex-col font-sans transition-colors duration-300 bg-background text-foreground">
+      <body className="min-h-full flex flex-col font-sans transition-colors duration-300 bg-background text-foreground relative">
         <FloatingNavbar />
         <SocialLinks />
         <PageWrapper>
           {children}
         </PageWrapper>
+        {modal}
         <Script id="microsoft-clarity" strategy="afterInteractive">
           {`
             (function(c,l,a,r,i,t,y){

@@ -103,21 +103,22 @@ function HomeContent() {
 
       <LayoutGroup>
 
-        {/* ───── DEFAULT STATE: Centered headline + tall cards ───── */}
-        <AnimatePresence>
-          {!isSelected && (
+        {/* ───── CONTENT WRAPPER: Handles both states for smooth morphing ───── */}
+        <AnimatePresence mode="popLayout" initial={false}>
+          {!isSelected ? (
             <motion.div
               key="default-view"
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
-              exit={{ opacity: 0, transition: { duration: 0.2 } }}
+              exit={{ opacity: 0 }}
+              transition={{ duration: 0.4 }}
               className="relative z-10 flex flex-col items-center text-center justify-center flex-1 gap-12 md:gap-16 max-w-[1800px] w-full mx-auto"
             >
               {/* Headline */}
               <motion.div
-                initial={{ opacity: 0, y: 10 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.4 }}
+                initial={{ opacity: 0, scale: 0.98 }}
+                animate={{ opacity: 1, scale: 1 }}
+                transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
                 className="flex flex-col gap-4 md:gap-6"
               >
                 <h1 className="text-4xl md:text-6xl lg:text-7xl xl:text-8xl font-medium text-slate-400 tracking-tight leading-tight">
@@ -126,7 +127,7 @@ function HomeContent() {
                       key={index}
                       initial={{ opacity: 0 }}
                       animate={{ opacity: 1 }}
-                      transition={{ duration: 0.05, delay: index * 0.05 }}
+                      transition={{ duration: 0.05, delay: index * 0.03 }}
                     >
                       {char}
                     </motion.span>
@@ -148,13 +149,13 @@ function HomeContent() {
                   <motion.div
                     key={service.title}
                     layoutId={`card-${service.title}`}
-                    initial={{ opacity: 0, y: 20 }}
-                    animate={{ opacity: 1, y: 0 }}
+                    initial={{ opacity: 0, scale: 0.9 }}
+                    animate={{ opacity: 1, scale: 1 }}
+                    exit={{ opacity: 0, scale: 0.9 }}
                     transition={{
-                      duration: 0.8,
-                      delay: headlineDelay + 0.4 + index * 0.2,
-                      ease: "easeOut",
-                      layout: { type: "spring", stiffness: 250, damping: 30 },
+                      duration: 0.5,
+                      delay: headlineDelay + 0.5 + index * 0.1,
+                      layout: { type: "spring", stiffness: 300, damping: 30 },
                     }}
                     onClick={() => handleSelect(service.title)}
                     style={{ borderRadius: 24 }}
@@ -176,17 +177,13 @@ function HomeContent() {
                 ))}
               </div>
             </motion.div>
-          )}
-        </AnimatePresence>
-
-        {/* ───── SELECTED STATE: Pills + project list ───── */}
-        <AnimatePresence>
-          {isSelected && (
+          ) : (
             <motion.div
               key="selected-view"
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
-              exit={{ opacity: 0, transition: { duration: 0.2 } }}
+              exit={{ opacity: 0 }}
+              transition={{ duration: 0.4 }}
               className="relative z-10 flex flex-col flex-1 gap-6 max-w-[1800px] w-full mx-auto"
             >
               {/* Filter Pills row */}
@@ -199,8 +196,8 @@ function HomeContent() {
                       layoutId={`card-${service.title}`}
                       onClick={() => handleSelect(service.title)}
                       style={{ borderRadius: 999 }}
-                      transition={{ type: "spring", stiffness: 250, damping: 30 }}
-                      className={`flex items-center gap-2.5 px-5 py-3 text-sm font-semibold backdrop-blur-md transition-colors duration-300 ${
+                      transition={{ type: "spring", stiffness: 300, damping: 30 }}
+                      className={`flex items-center gap-2.5 px-5 py-3 text-sm font-semibold backdrop-blur-md transition-colors duration-300 cursor-pointer ${
                         isActive
                           ? "bg-primary/20 text-white border border-primary/40 shadow-[0_0_20px_rgba(0,122,255,0.25)]"
                           : "bg-white/5 text-slate-400 border border-white/5 hover:bg-white/10 hover:text-white"
@@ -218,9 +215,15 @@ function HomeContent() {
               </div>
 
               <motion.div
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                transition={{ duration: 0.6, delay: 0.3, ease: "easeOut" }}
+                initial="hidden"
+                animate="visible"
+                variants={{
+                  hidden: { opacity: 0 },
+                  visible: { 
+                    opacity: 1,
+                    transition: { staggerChildren: 0.1, delayChildren: 0.2 }
+                  }
+                }}
                 className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 flex-1 min-h-[400px]"
               >
                 {filteredProjects.length > 0 ? (
@@ -232,7 +235,11 @@ function HomeContent() {
                     />
                   ))
                 ) : (
-                  <div className="col-span-full py-20 flex flex-col items-center justify-center text-center gap-6">
+                  <motion.div 
+                    initial={{ opacity: 0, y: 10 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    className="col-span-full py-20 flex flex-col items-center justify-center text-center gap-6"
+                  >
                     <div className="w-16 h-16 rounded-full bg-white/5 flex items-center justify-center border border-white/10">
                       <Icon icon="solar:box-minimalistic-bold-duotone" className="text-3xl text-white/20" />
                     </div>
@@ -242,7 +249,7 @@ function HomeContent() {
                         We are currently working on adding new projects to this category. Stay tuned for updates!
                       </p>
                     </div>
-                  </div>
+                  </motion.div>
                 )}
               </motion.div>
             </motion.div>
