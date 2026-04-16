@@ -2,13 +2,63 @@
 
 import { useMemo } from "react";
 import { Project as ProjectType } from "@/data/projects";
-import { motion, useScroll, useTransform } from "motion/react";
+import { m } from "framer-motion";
+import { useScroll, useTransform } from "motion/react";
 import { Icon } from "@iconify/react";
 import Image from "next/image";
 
 interface ProjectDetailProps {
   project: ProjectType;
   containerRef?: React.RefObject<HTMLElement | null>;
+}
+
+function AnimatedMetric({ value, label, description, progress, delay = 0 }: { value: string, label: string, description: string, progress?: number, delay?: number }) {
+  const radius = 38;
+  const circumference = 2 * Math.PI * radius;
+  
+  return (
+    <m.div
+      initial={{ opacity: 0, x: 20 }}
+      whileInView={{ opacity: 1, x: 0 }}
+      viewport={{ once: true }}
+      transition={{ delay, duration: 0.6, ease: "easeOut" }}
+      className="flex items-center gap-6"
+    >
+      {/* Visual Graph Side */}
+      {progress !== undefined ? (
+        <div className="relative w-24 h-24 flex-shrink-0 flex items-center justify-center">
+          <svg className="absolute inset-0 w-full h-full -rotate-90 transform text-white/10 drop-shadow-xl" viewBox="0 0 100 100">
+            <circle cx="50" cy="50" r={radius} stroke="currentColor" strokeWidth="6" fill="none" />
+            <m.circle 
+              cx="50" cy="50" r={radius} 
+              stroke="#10b981" 
+              strokeWidth="6" 
+              fill="none" 
+              strokeLinecap="round"
+              strokeDasharray={circumference}
+              initial={{ strokeDashoffset: circumference }}
+              whileInView={{ strokeDashoffset: circumference - (progress / 100) * circumference }}
+              viewport={{ once: true }}
+              transition={{ duration: 1.5, ease: "easeOut", delay: delay + 0.2 }}
+            />
+          </svg>
+          <span className="relative z-10 text-2xl font-bold tracking-tighter text-white">{value}</span>
+        </div>
+      ) : (
+        <div className="flex-shrink-0 min-w-[80px]">
+          <span className="text-4xl md:text-5xl font-medium tabular-nums text-white tracking-tight">
+            {value}
+          </span>
+        </div>
+      )}
+
+      {/* Text Context Side */}
+      <div className="flex flex-col gap-1.5 max-w-xs">
+        <span className="text-sm font-bold uppercase tracking-widest text-emerald-500">{label}</span>
+        <span className="text-sm text-white/50 font-medium leading-relaxed">{description}</span>
+      </div>
+    </m.div>
+  );
 }
 
 export default function ProjectDetail({ project, containerRef }: ProjectDetailProps) {
@@ -22,7 +72,7 @@ export default function ProjectDetail({ project, containerRef }: ProjectDetailPr
     <div className="bg-black text-white selection:bg-white/20">
       {/* ──── HERO SECTION ──── */}
       <section className="relative h-[80vh] md:h-screen w-full overflow-hidden flex flex-col justify-end pb-20 px-6 md:px-12 lg:px-24">
-        <motion.div 
+        <m.div 
           style={{ opacity, scale }}
           className="absolute inset-0 z-0"
         >
@@ -34,10 +84,10 @@ export default function ProjectDetail({ project, containerRef }: ProjectDetailPr
             className="object-cover"
             priority
           />
-        </motion.div>
+        </m.div>
 
         <div className="relative z-20 max-w-[1800px] w-full mx-auto">
-          <motion.div
+          <m.div
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, ease: "easeOut" }}
@@ -68,11 +118,11 @@ export default function ProjectDetail({ project, containerRef }: ProjectDetailPr
                 </span>
               ))}
             </div>
-          </motion.div>
+          </m.div>
         </div>
 
         {/* Scroll Indicator */}
-        <motion.div 
+        <m.div 
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ delay: 1, duration: 1 }}
@@ -80,7 +130,7 @@ export default function ProjectDetail({ project, containerRef }: ProjectDetailPr
         >
           <span className="text-[10px] uppercase tracking-[0.3em] text-white/30 font-bold">Scroll to explore</span>
           <div className="w-[1px] h-12 bg-gradient-to-b from-white/40 to-transparent" />
-        </motion.div>
+        </m.div>
       </section>
 
       {/* ──── CONTENT SECTION ──── */}
@@ -88,7 +138,7 @@ export default function ProjectDetail({ project, containerRef }: ProjectDetailPr
         
         {/* Overview & Objective */}
         <section className="grid grid-cols-1 lg:grid-cols-2 gap-16 md:gap-24 items-start">
-          <motion.div
+          <m.div
             initial={{ opacity: 0, x: -20 }}
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
@@ -101,9 +151,9 @@ export default function ProjectDetail({ project, containerRef }: ProjectDetailPr
             <p className="text-2xl md:text-4xl font-medium leading-[1.2] text-white">
               {project.overview}
             </p>
-          </motion.div>
+          </m.div>
 
-          <motion.div
+          <m.div
             initial={{ opacity: 0, x: 20 }}
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
@@ -113,7 +163,7 @@ export default function ProjectDetail({ project, containerRef }: ProjectDetailPr
             <p className="text-lg text-white/60 leading-relaxed font-medium">
               {project.objective}
             </p>
-          </motion.div>
+          </m.div>
         </section>
 
         {/* The Challenge */}
@@ -133,7 +183,7 @@ export default function ProjectDetail({ project, containerRef }: ProjectDetailPr
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
             {project.challenge.points.map((point, i) => (
-              <motion.div
+              <m.div
                 key={point.title}
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
@@ -143,7 +193,7 @@ export default function ProjectDetail({ project, containerRef }: ProjectDetailPr
               >
                 <h4 className="text-xl font-bold text-white/90">{point.title}</h4>
                 <p className="text-white/50 leading-relaxed">{point.description}</p>
-              </motion.div>
+              </m.div>
             ))}
           </div>
         </section>
@@ -158,7 +208,7 @@ export default function ProjectDetail({ project, containerRef }: ProjectDetailPr
             
             <div className="columns-1 md:columns-2 gap-8 space-y-8">
               {project.images.slice(1).map((img, i) => (
-                <motion.div
+                <m.div
                   key={img}
                   initial={{ opacity: 0, y: 20 }}
                   whileInView={{ opacity: 1, y: 0 }}
@@ -173,7 +223,7 @@ export default function ProjectDetail({ project, containerRef }: ProjectDetailPr
                     height={800}
                     className="w-full h-auto object-cover hover:scale-105 transition-transform duration-700 ease-out"
                   />
-                </motion.div>
+                </m.div>
               ))}
             </div>
           </section>
@@ -198,24 +248,16 @@ export default function ProjectDetail({ project, containerRef }: ProjectDetailPr
             </div>
 
             {project.outcome.metrics && (
-              <div className="grid grid-cols-1 sm:grid-cols-2 lg:flex lg:flex-col gap-12 md:gap-16 min-w-[300px]">
-                {project.outcome.metrics.map((m, i) => (
-                  <motion.div
-                    key={m.label}
-                    initial={{ opacity: 0, x: 20 }}
-                    whileInView={{ opacity: 1, x: 0 }}
-                    viewport={{ once: true }}
-                    transition={{ delay: i * 0.2 }}
-                    className="space-y-2"
-                  >
-                    <span className="text-5xl md:text-7xl font-medium tabular-nums text-white">
-                      {m.value}
-                    </span>
-                    <div className="flex flex-col">
-                      <span className="text-sm font-bold uppercase tracking-widest text-emerald-500">{m.label}</span>
-                      <span className="text-sm text-white/40 font-medium">{m.description}</span>
-                    </div>
-                  </motion.div>
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:flex lg:flex-col gap-10 md:gap-12 min-w-[300px]">
+                {project.outcome.metrics.map((metric, i) => (
+                  <AnimatedMetric 
+                    key={metric.label}
+                    value={metric.value}
+                    label={metric.label}
+                    description={metric.description}
+                    progress={metric.progress}
+                    delay={i * 0.15}
+                  />
                 ))}
               </div>
             )}
@@ -225,7 +267,7 @@ export default function ProjectDetail({ project, containerRef }: ProjectDetailPr
         {/* Work with me CTA */}
         <section className="text-center space-y-12 py-20 pb-0">
           <h2 className="text-4xl md:text-6xl font-medium tracking-tight">Need similar outcomes?</h2>
-          <motion.a
+          <m.a
             href="/contact"
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
@@ -233,7 +275,7 @@ export default function ProjectDetail({ project, containerRef }: ProjectDetailPr
           >
             Start a Conversation
             <Icon icon="solar:round-arrow-right-up-bold" className="text-2xl" />
-          </motion.a>
+          </m.a>
         </section>
       </div>
     </div>

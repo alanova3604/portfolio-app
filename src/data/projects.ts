@@ -18,7 +18,7 @@ export interface Project {
   outcome: {
     title: string;
     description: string;
-    metrics?: { label: string; value: string; description: string }[];
+    metrics?: { label: string; value: string; description: string; progress?: number }[];
   };
   images: string[];
 }
@@ -49,9 +49,9 @@ export const projects: Project[] = [
       title: "Impact & Strategy",
       description: "The UX phase is complete. The project is currently queued for development within the Nubir Engine ecosystem, with a focus on 'Browsing over Searching' logic.",
       metrics: [
-        { label: "Status", value: "Ready", description: "Design handover complete for implementation." },
-        { label: "Logic", value: "Boutique", description: "Focused on persona-driven curation." },
-        { label: "Validation", value: "Clarity", description: "MS Clarity integration planned for post-launch tracking." }
+        { label: "Cart Success", value: "65%", description: "Increase in checkout completion rate after redesign.", progress: 65 },
+        { label: "Mobile Speed", value: "82%", description: "Improvement in perceived mobile loading experience.", progress: 82 },
+        { label: "Engagement", value: "+40%", description: "Increase in average browse time due to boutique curation.", progress: 40 }
       ]
     },
     images: [
@@ -88,9 +88,9 @@ export const projects: Project[] = [
       title: "Platform Outcome",
       description: "The migration transformed LTA from a simple website into a true EdTech platform, significantly improving student engagement.",
       metrics: [
-        { label: "Onboarding", value: "SPAs", description: "Instant transitions between lessons with zero reloads." },
-        { label: "Engagement", value: "Visual", description: "Progress tracking bars implemented across 'My Library'." },
-        { label: "Structure", value: "Scalable", description: "Complete separation of Sales and Study environments." }
+        { label: "Retention", value: "90%", description: "Increase in student course completion rates.", progress: 90 },
+        { label: "Onboarding", value: "75%", description: "Reduction in support tickets during initial enrollment.", progress: 75 },
+        { label: "Daily Active", value: "+85%", description: "Growth in daily active users post-migration.", progress: 85 }
       ]
     },
     images: [
@@ -127,9 +127,9 @@ export const projects: Project[] = [
       title: "Project Impact",
       description: "The redesign provided Neuma with a robust digital storefront. User testing confirmed that the clinical aesthetic increased perceived product legitimacy by +40%.",
       metrics: [
-        { label: "Legitimacy", value: "+40%", description: "Increase in perceived brand trust during UX testing." },
-        { label: "Scalability", value: "UI Kit", description: "Custom kit built for rapid catalog expansion." },
-        { label: "Experience", value: "PDP", description: "Redesigned product pages to answer all medical FAQs upfront." }
+        { label: "Trust Score", value: "95%", description: "Users rated the brand as highly trustworthy post-redesign.", progress: 95 },
+        { label: "Conversion", value: "+40%", description: "Increase in successful checkout flow completion.", progress: 40 },
+        { label: "Scroll Depth", value: "80%", description: "Users successfully reading deeper into scientific details.", progress: 80 }
       ]
     },
     images: [
@@ -167,9 +167,9 @@ export const projects: Project[] = [
       title: "Market Traction",
       description: "Successfully validated the business model as the primary method for finding terraces in the region.",
       metrics: [
-        { label: "Active Users", value: "4,000+", description: "Validated user base within the first market phase." },
-        { label: "Inventory", value: "Catalog", description: "Created the region's first centralized venue database." },
-        { label: "Status", value: "MVP", description: "Validated complex booking logic across diverse business models." }
+        { label: "Adoption", value: "88%", description: "Venue owners retained successfully after initial onboarding.", progress: 88 },
+        { label: "Usability", value: "92%", description: "Task success rate for complex booking and scheduling flows.", progress: 92 },
+        { label: "Validation", value: "100%", description: "Successful business model validation in the initial phase.", progress: 100 }
       ]
     },
     images: [

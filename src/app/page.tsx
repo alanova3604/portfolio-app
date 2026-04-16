@@ -3,7 +3,8 @@
 import { useCallback, useEffect, Suspense, useMemo } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { Icon } from "@iconify/react";
-import { motion, AnimatePresence, LayoutGroup } from "motion/react";
+import { m } from "framer-motion";
+import { AnimatePresence, LayoutGroup } from "motion/react";
 import GeometricPattern from "@/components/GeometricPattern";
 import ProjectCard from "@/components/Project";
 import { projects } from "@/data/projects";
@@ -93,7 +94,7 @@ function HomeContent() {
       <GeometricPattern />
 
       {/* Diagonal Glow Animation */}
-      <motion.div
+      <m.div
         initial={{ top: "-20%", left: "-20%", opacity: 0 }}
         animate={{ top: ["-20%", "120%"], left: ["-20%", "120%"], opacity: [0, 0.15, 0] }}
         transition={{ duration: 10, repeat: Infinity, ease: "linear", repeatDelay: 2 }}
@@ -106,7 +107,7 @@ function HomeContent() {
         {/* ───── CONTENT WRAPPER: Handles both states for smooth morphing ───── */}
         <AnimatePresence mode="popLayout" initial={false}>
           {!isSelected ? (
-            <motion.div
+            <m.div
               key="default-view"
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
@@ -115,7 +116,7 @@ function HomeContent() {
               className="relative z-10 flex flex-col items-center text-center justify-center flex-1 gap-12 md:gap-16 max-w-[1800px] w-full mx-auto"
             >
               {/* Headline */}
-              <motion.div
+              <m.div
                 initial={{ opacity: 0, scale: 0.98 }}
                 animate={{ opacity: 1, scale: 1 }}
                 transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
@@ -123,30 +124,30 @@ function HomeContent() {
               >
                 <h1 className="text-4xl md:text-6xl lg:text-7xl xl:text-8xl font-medium text-slate-400 tracking-tight leading-tight">
                   {headline.split("").map((char, index) => (
-                    <motion.span
+                    <m.span
                       key={index}
                       initial={{ opacity: 0 }}
                       animate={{ opacity: 1 }}
                       transition={{ duration: 0.05, delay: index * 0.03 }}
                     >
                       {char}
-                    </motion.span>
+                    </m.span>
                   ))}
                 </h1>
-                <motion.p
+                <m.p
                   initial={{ opacity: 0 }}
                   animate={{ opacity: 1 }}
                   transition={{ duration: 1, delay: headlineDelay + 0.2 }}
                   className="text-lg md:text-2xl lg:text-3xl font-medium text-slate-500/80"
                 >
                   Solving complex problems through design and craft.
-                </motion.p>
-              </motion.div>
+                </m.p>
+              </m.div>
 
               {/* Cards grid */}
               <div className="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-10 w-full">
                 {services.map((service, index) => (
-                  <motion.div
+                  <m.div
                     key={service.title}
                     layoutId={`card-${service.title}`}
                     initial={{ opacity: 0, scale: 0.9 }}
@@ -162,23 +163,23 @@ function HomeContent() {
                     className="group relative h-[200px] md:h-[260px] lg:h-[300px] p-6 md:p-10 flex flex-col items-center justify-center gap-4 bg-white/5 border border-white/5 backdrop-blur-sm shadow-2xl overflow-hidden cursor-pointer hover:bg-white/[0.08] transition-colors duration-300"
                   >
                     <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none bg-gradient-to-tr from-transparent via-white/5 to-transparent" />
-                    <motion.span layoutId={`icon-${service.title}`}>
+                    <m.span layoutId={`icon-${service.title}`}>
                       <Icon icon={service.icon} className="text-5xl md:text-6xl text-primary transition-transform duration-500 group-hover:scale-105" />
-                    </motion.span>
+                    </m.span>
                     <div className="space-y-2 text-center">
-                      <motion.h3 layoutId={`title-${service.title}`} className="text-xl md:text-2xl font-bold text-white leading-none">
+                      <m.h3 layoutId={`title-${service.title}`} className="text-xl md:text-2xl font-bold text-white leading-none">
                         {service.title}
-                      </motion.h3>
+                      </m.h3>
                       <p className="text-neutral-400 text-sm md:text-base font-medium leading-relaxed">
                         {service.description}
                       </p>
                     </div>
-                  </motion.div>
+                  </m.div>
                 ))}
               </div>
-            </motion.div>
+            </m.div>
           ) : (
-            <motion.div
+            <m.div
               key="selected-view"
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
@@ -191,7 +192,7 @@ function HomeContent() {
                 {services.map((service) => {
                   const isActive = categoryParam === toSlug(service.title);
                   return (
-                    <motion.button
+                    <m.button
                       key={service.title}
                       layoutId={`card-${service.title}`}
                       onClick={() => handleSelect(service.title)}
@@ -203,18 +204,18 @@ function HomeContent() {
                           : "bg-white/5 text-slate-400 border border-white/5 hover:bg-white/10 hover:text-white"
                       }`}
                     >
-                      <motion.span layoutId={`icon-${service.title}`}>
+                      <m.span layoutId={`icon-${service.title}`}>
                         <Icon icon={service.icon} className="text-base" />
-                      </motion.span>
-                      <motion.span layoutId={`title-${service.title}`} className="whitespace-nowrap">
+                      </m.span>
+                      <m.span layoutId={`title-${service.title}`} className="whitespace-nowrap">
                         {service.title}
-                      </motion.span>
-                    </motion.button>
+                      </m.span>
+                    </m.button>
                   );
                 })}
               </div>
 
-              <motion.div
+              <m.div
                 initial="hidden"
                 animate="visible"
                 variants={{
@@ -235,7 +236,7 @@ function HomeContent() {
                     />
                   ))
                 ) : (
-                  <motion.div 
+                  <m.div 
                     initial={{ opacity: 0, y: 10 }}
                     animate={{ opacity: 1, y: 0 }}
                     className="col-span-full py-20 flex flex-col items-center justify-center text-center gap-6"
@@ -249,10 +250,10 @@ function HomeContent() {
                         We are currently working on adding new projects to this category. Stay tuned for updates!
                       </p>
                     </div>
-                  </motion.div>
+                  </m.div>
                 )}
-              </motion.div>
-            </motion.div>
+              </m.div>
+            </m.div>
           )}
         </AnimatePresence>
 

@@ -1,6 +1,6 @@
 "use client";
 
-import { motion } from "motion/react";
+import { m } from "framer-motion";
 import { Icon } from "@iconify/react";
 import Link from "next/link";
 import Image from "next/image";
@@ -28,7 +28,7 @@ export default function ProjectCard({ project, index }: ProjectCardProps) {
   };
 
   return (
-    <motion.div
+    <m.div
       variants={cardVariants}
       className="group relative aspect-square rounded-[32px] overflow-hidden bg-white/[0.03] border border-white/5 backdrop-blur-sm cursor-pointer hover:border-white/20 transition-all duration-500"
     >
@@ -47,7 +47,7 @@ export default function ProjectCard({ project, index }: ProjectCardProps) {
         {/* Content */}
         <div className="relative z-20 w-full h-full p-8 md:p-10 flex flex-col justify-between">
           <div className="flex justify-between items-start">
-            <motion.div
+            <m.div
               layoutId={`icon-${project.slug}`}
               className="w-12 h-12 rounded-2xl bg-white/5 backdrop-blur-md border border-white/10 flex items-center justify-center group-hover:bg-white/10 transition-colors"
             >
@@ -58,7 +58,7 @@ export default function ProjectCard({ project, index }: ProjectCardProps) {
                 height={24} 
                 className="brightness-0 invert opacity-40 group-hover:opacity-100 transition-opacity"
                />
-            </motion.div>
+            </m.div>
             <span className="text-[10px] font-bold uppercase tracking-widest text-white/30 group-hover:text-white/60 transition-colors">
               {project.year}
             </span>
@@ -85,6 +85,6 @@ export default function ProjectCard({ project, index }: ProjectCardProps) {
           <Icon icon="solar:round-arrow-right-up-bold" className="text-3xl text-white" />
         </div>
       </Link>
-    </motion.div>
+    </m.div>
   );
 }

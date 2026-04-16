@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { motion } from "motion/react";
+import { m } from "framer-motion";
 import { Icon } from "@iconify/react";
 import GeometricPattern from "@/components/GeometricPattern";
 
@@ -78,7 +78,7 @@ function Contact() {
             <GeometricPattern />
 
             {/* Diagonal Glow Animation */}
-            <motion.div
+            <m.div
                 initial={{ top: "-20%", left: "-20%", opacity: 0 }}
                 animate={{ 
                     top: ["-20%", "120%"], 
@@ -98,7 +98,7 @@ function Contact() {
                 <header className="mb-12">
                     <h1 className="text-4xl md:text-6xl lg:text-7xl xl:text-8xl font-medium text-slate-400 tracking-tight leading-tight">
                         {headline.split("").map((char, index) => (
-                          <motion.span
+                          <m.span
                             key={index}
                             initial={{ opacity: 0 }}
                             animate={{ opacity: 1 }}
@@ -109,7 +109,7 @@ function Contact() {
                             }}
                           >
                             {char}
-                          </motion.span>
+                          </m.span>
                         ))}
                     </h1>
                 </header>
@@ -119,7 +119,7 @@ function Contact() {
                     <form className="space-y-6" onSubmit={handleSubmit} noValidate>
                         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                             {/* NAME */}
-                            <motion.div 
+                            <m.div 
                                 initial={{ opacity: 0, x: -20 }}
                                 animate={{ opacity: 1, x: 0 }}
                                 transition={{ delay: headline.length * 0.05 + 0.2 }}
@@ -136,10 +136,10 @@ function Contact() {
                                     className="w-full bg-transparent outline-none text-foreground text-lg"
                                     placeholder="Enter your name"
                                 />
-                            </motion.div>
+                            </m.div>
 
                             {/* EMAIL */}
-                            <motion.div 
+                            <m.div 
                                 initial={{ opacity: 0, x: -20 }}
                                 animate={{ opacity: 1, x: 0 }}
                                 transition={{ delay: headline.length * 0.05 + 0.3 }}
@@ -156,11 +156,11 @@ function Contact() {
                                     className="w-full bg-transparent outline-none text-foreground text-lg"
                                     placeholder="your@email.com"
                                 />
-                            </motion.div>
+                            </m.div>
                         </div>
 
                         {/* PHONE */}
-                        <motion.div 
+                        <m.div 
                             initial={{ opacity: 0, x: -20 }}
                             animate={{ opacity: 1, x: 0 }}
                             transition={{ delay: headline.length * 0.05 + 0.4 }}
@@ -175,10 +175,10 @@ function Contact() {
                                 className="w-full bg-transparent outline-none text-foreground text-lg"
                                 placeholder="+1 (555) 000-0000"
                             />
-                        </motion.div>
+                        </m.div>
 
                         {/* MESSAGE */}
-                        <motion.div 
+                        <m.div 
                             initial={{ opacity: 0, x: -20 }}
                             animate={{ opacity: 1, x: 0 }}
                             transition={{ delay: headline.length * 0.05 + 0.5 }}
@@ -195,10 +195,10 @@ function Contact() {
                                 className="w-full bg-transparent outline-none text-foreground text-lg resize-none"
                                 placeholder="Describe the problem we're solving..."
                             ></textarea>
-                        </motion.div>
+                        </m.div>
 
                         {/* BOTÓN */}
-                        <motion.div 
+                        <m.div 
                             initial={{ opacity: 0 }}
                             animate={{ opacity: 1 }}
                             transition={{ delay: headline.length * 0.05 + 0.6 }}
@@ -224,39 +224,39 @@ function Contact() {
                             </button>
 
                             {status === 'success' && (
-                                <motion.span initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="text-emerald-400 font-medium">Thanks! I'll be in touch soon.</motion.span>
+                                <m.span initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="text-emerald-400 font-medium">Thanks! I'll be in touch soon.</m.span>
                             )}
                             {status === 'error' && (
-                                <motion.span initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="text-red-400 font-medium">Something went wrong. Try again.</motion.span>
+                                <m.span initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="text-red-400 font-medium">Something went wrong. Try again.</m.span>
                             )}
-                        </motion.div>
+                        </m.div>
                     </form>
 
                     {/* CONTACT INFO ASIDE */}
                     <aside className="space-y-10 lg:pl-12 border-t lg:border-t-0 lg:border-l border-white/5 pt-10 lg:pt-0 lg:ml-auto">
                         <div className="space-y-3">
-                            <motion.p initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 1.2 }} className="text-slate-500 text-xs font-bold uppercase tracking-[0.2em]">Contact Details</motion.p>
-                            <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 1.3 }} className="space-y-1 text-2xl md:text-3xl font-medium text-slate-200">
+                            <m.p initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 1.2 }} className="text-slate-500 text-xs font-bold uppercase tracking-[0.2em]">Contact Details</m.p>
+                            <m.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 1.3 }} className="space-y-1 text-2xl md:text-3xl font-medium text-slate-200">
                                 <p>Alan Valdez</p>
                                 <p className="text-slate-500">Guadalajara, Mexico</p>
-                            </motion.div>
+                            </m.div>
                         </div>
 
                         <div className="space-y-3">
-                            <motion.p initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 1.4 }} className="text-slate-500 text-xs font-bold uppercase tracking-[0.2em]">Let's Connect</motion.p>
+                            <m.p initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 1.4 }} className="text-slate-500 text-xs font-bold uppercase tracking-[0.2em]">Let's Connect</m.p>
                             <ul className="space-y-4">
-                                <motion.li initial={{ opacity: 0, x: 10 }} animate={{ opacity: 1, x: 0 }} transition={{ delay: 1.5 }}>
+                                <m.li initial={{ opacity: 0, x: 10 }} animate={{ opacity: 1, x: 0 }} transition={{ delay: 1.5 }}>
                                     <a href="https://www.linkedin.com/in/alanvalcala" target="_blank" rel="noreferrer" className="group flex items-center gap-3 text-xl text-slate-300 hover:text-primary transition-all duration-300">
                                         LinkedIn
                                         <Icon icon="solar:arrow-right-up-linear" className="transition-transform group-hover:translate-x-1 group-hover:-translate-y-1" />
                                     </a>
-                                </motion.li>
-                                <motion.li initial={{ opacity: 0, x: 10 }} animate={{ opacity: 1, x: 0 }} transition={{ delay: 1.6 }}>
+                                </m.li>
+                                <m.li initial={{ opacity: 0, x: 10 }} animate={{ opacity: 1, x: 0 }} transition={{ delay: 1.6 }}>
                                     <a href="https://wa.me/523315316226" target="_blank" rel="noreferrer" className="group flex items-center gap-3 text-xl text-slate-300 hover:text-primary transition-all duration-300">
                                         WhatsApp
                                         <Icon icon="solar:arrow-right-up-linear" className="transition-transform group-hover:translate-x-1 group-hover:-translate-y-1" />
                                     </a>
-                                </motion.li>
+                                </m.li>
                             </ul>
                         </div>
                     </aside>

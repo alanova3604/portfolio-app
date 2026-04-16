@@ -1,6 +1,6 @@
 "use client";
 
-import { motion } from "motion/react";
+import { m } from "framer-motion";
 import { Icon } from "@iconify/react";
 import GeometricPattern from "@/components/GeometricPattern";
 
@@ -36,7 +36,7 @@ function AboutMe() {
             <GeometricPattern />
 
             {/* Diagonal Glow Animation */}
-            <motion.div
+            <m.div
                 initial={{ top: "-20%", left: "-20%", opacity: 0 }}
                 animate={{ 
                     top: ["-20%", "120%"], 
@@ -56,7 +56,7 @@ function AboutMe() {
                 <header className="mb-10 lg:mb-16">
                     <h1 className="text-4xl md:text-6xl lg:text-7xl xl:text-8xl font-medium text-slate-400 tracking-tight leading-tight">
                         {headline.split("").map((char, index) => (
-                          <motion.span
+                          <m.span
                             key={index}
                             initial={{ opacity: 0 }}
                             animate={{ opacity: 1 }}
@@ -67,7 +67,7 @@ function AboutMe() {
                             }}
                           >
                             {char}
-                          </motion.span>
+                          </m.span>
                         ))}
                     </h1>
                 </header>
@@ -76,7 +76,7 @@ function AboutMe() {
                     {/* CORE STORY */}
                     <div className="space-y-10 lg:space-y-12">
                         {storySections.map((section, index) => (
-                            <motion.div 
+                            <m.div 
                                 key={section.title}
                                 initial={{ opacity: 0, x: -20 }}
                                 animate={{ opacity: 1, x: 0 }}
@@ -90,32 +90,32 @@ function AboutMe() {
                                 <p className="text-lg lg:text-xl font-medium text-slate-200 leading-relaxed max-w-2xl">
                                     {section.content}
                                 </p>
-                            </motion.div>
+                            </m.div>
                         ))}
                     </div>
 
                     {/* DETAILS ASIDE */}
                     <aside className="space-y-12 lg:pl-12 border-t lg:border-t-0 lg:border-l border-white/5 pt-10 lg:pt-0">
                         <div className="space-y-6">
-                            <motion.h3 initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 1 }} className="text-slate-500 text-xs font-bold uppercase tracking-[0.2em]">Education</motion.h3>
+                            <m.h3 initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 1 }} className="text-slate-500 text-xs font-bold uppercase tracking-[0.2em]">Education</m.h3>
                             <div className="space-y-6">
-                                <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 1.1 }} className="space-y-1">
+                                <m.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 1.1 }} className="space-y-1">
                                     <p className="text-lg font-medium text-slate-200">Animation Design</p>
                                     <p className="text-sm text-slate-500">Uni. Tecnologica de Mexico</p>
-                                </motion.div>
-                                <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 1.2 }} className="space-y-1">
+                                </m.div>
+                                <m.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 1.2 }} className="space-y-1">
                                     <p className="text-lg font-medium text-slate-200 text-primary flex items-center gap-2">
                                         UX Design
                                         <Icon icon="solar:verified-check-bold" className="text-lg" />
                                     </p>
                                     <p className="text-sm text-slate-500">Google / Coursera Professional</p>
-                                </motion.div>
+                                </m.div>
                             </div>
                         </div>
 
                         <div className="space-y-6">
-                            <motion.h3 initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 1.3 }} className="text-slate-500 text-xs font-bold uppercase tracking-[0.2em]">Current Status</motion.h3>
-                            <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 1.4 }} className="space-y-2">
+                            <m.h3 initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 1.3 }} className="text-slate-500 text-xs font-bold uppercase tracking-[0.2em]">Current Status</m.h3>
+                            <m.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 1.4 }} className="space-y-2">
                                 <div className="flex items-center gap-2 text-emerald-400">
                                     <span className="relative flex h-2 w-2">
                                         <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
@@ -124,7 +124,7 @@ function AboutMe() {
                                     <p className="text-lg font-medium">Available for Remote Opportunities</p>
                                 </div>
                                 <p className="text-sm text-slate-500">Open to international collaborations.</p>
-                            </motion.div>
+                            </m.div>
                         </div>
                     </aside>
                 </div>

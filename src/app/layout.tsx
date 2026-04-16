@@ -5,6 +5,7 @@ import "./globals.css";
 import FloatingNavbar from "@/components/FloatingNavbar";
 import SocialLinks from "@/components/SocialLinks";
 import PageWrapper from "@/components/PageWrapper";
+import MotionProvider from "@/components/MotionProvider";
 
 const instrumentSans = Instrument_Sans({
   variable: "--font-instrument",
@@ -33,10 +34,12 @@ export default function RootLayout({
       <body className="min-h-full flex flex-col font-sans transition-colors duration-300 bg-background text-foreground relative">
         <FloatingNavbar />
         <SocialLinks />
-        <PageWrapper>
-          {children}
-        </PageWrapper>
-        {modal}
+        <MotionProvider>
+          <PageWrapper>
+            {children}
+          </PageWrapper>
+          {modal}
+        </MotionProvider>
         <Script id="microsoft-clarity" strategy="afterInteractive">
           {`
             (function(c,l,a,r,i,t,y){

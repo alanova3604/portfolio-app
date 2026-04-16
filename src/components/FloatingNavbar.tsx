@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { Icon } from "@iconify/react";
-import { motion } from "motion/react";
+import { m } from "framer-motion";
 
 const FloatingNavbar = () => {
   const pathname = usePathname();
@@ -27,11 +27,11 @@ const FloatingNavbar = () => {
               className="relative px-6 h-full flex justify-center items-center gap-2.5 rounded-full transition-all duration-300 hover:bg-white/5 group"
             >
               {isActive && (
-                <motion.span
-                  layoutId="activePill"
-                  className="absolute inset-0 bg-white/10 rounded-full"
-                  transition={{ type: "spring", stiffness: 380, damping: 30 }}
-                />
+                  <m.span
+                    layoutId="activePill"
+                    className="absolute inset-0 bg-white/10 rounded-full"
+                    transition={{ type: "spring", stiffness: 380, damping: 30 }}
+                  />
               )}
               <Icon
                 icon={isActive ? item.activeIcon : item.icon}

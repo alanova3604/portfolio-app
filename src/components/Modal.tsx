@@ -2,7 +2,7 @@
 
 import { useCallback, useEffect, useRef, ReactNode } from "react";
 import { useRouter } from "next/navigation";
-import { motion, AnimatePresence } from "motion/react";
+import { m } from "framer-motion";
 import { Icon } from "@iconify/react";
 
 interface ModalProps {
@@ -39,7 +39,7 @@ export default function Modal({ children, containerRef }: ModalProps) {
       className="fixed inset-0 z-[9999] bg-black/60 backdrop-blur-xl px-4 md:px-0 flex items-center justify-center p-4 md:p-10"
       onClick={onDismiss}
     >
-      <motion.div
+      <m.div
         initial={{ y: "100%", opacity: 0 }}
         animate={{ y: 0, opacity: 1 }}
         exit={{ y: "100%", opacity: 0 }}
@@ -70,7 +70,7 @@ export default function Modal({ children, containerRef }: ModalProps) {
         >
           {children}
         </div>
-      </motion.div>
+      </m.div>
     </div>
   );
 }
