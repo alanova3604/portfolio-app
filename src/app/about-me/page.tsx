@@ -3,30 +3,47 @@
 import { m } from "framer-motion";
 import { Icon } from "@iconify/react";
 import GeometricPattern from "@/components/GeometricPattern";
+import { useLang } from "@/context/LangContext";
 
 function AboutMe() {
-    const headline = "Strategy & Craft";
+    const { t } = useLang();
+    const headline = t("Strategy & Craft", "Estrategia & Oficio");
 
     const storySections = [
         {
-            title: "The Mission",
-            content: "I'm a Product Designer & Design Engineer dedicated to building seamless, scalable digital products that empower users."
+            title: t("The Mission", "La Misión"),
+            content: t(
+                "I'm a Product Designer & Design Engineer dedicated to building seamless, scalable digital products that empower users.",
+                "Soy un Product Designer & Design Engineer dedicado a construir productos digitales fluidos y escalables que empoderan a los usuarios."
+            )
         },
         {
-            title: "The Scope",
-            content: "I architect user-centered interfaces and implement high-performance web experiences from discovery to deployment."
+            title: t("The Scope", "El Alcance"),
+            content: t(
+                "I architect user-centered interfaces and implement high-performance web experiences from discovery to deployment.",
+                "Diseño interfaces centradas en el usuario e implemento experiencias web de alto rendimiento desde el descubrimiento hasta el despliegue."
+            )
         },
         {
-            title: "Philosophy",
-            content: "I treat design as a problem-solving engine. I build cohesive systems where every interaction serves both the user and the bottom line."
+            title: t("Philosophy", "Filosofía"),
+            content: t(
+                "I treat design as a problem-solving engine. I build cohesive systems where every interaction serves both the user and the bottom line.",
+                "Trato el diseño como un motor de resolución de problemas. Construyo sistemas cohesivos donde cada interacción sirve tanto al usuario como al negocio."
+            )
         },
         {
-            title: "Expertise",
-            content: "Deep experience in SaaS ecosystems, high-conversion e-commerce, and specialized interactive tools."
+            title: t("Expertise", "Especialidad"),
+            content: t(
+                "Deep experience in SaaS ecosystems, high-conversion e-commerce, and specialized interactive tools.",
+                "Amplia experiencia en ecosistemas SaaS, e-commerce de alta conversión y herramientas interactivas especializadas."
+            )
         },
         {
-            title: "Strategic Partnership",
-            content: "I bridge the gap between business objectives and technical possibility through rapid iteration and radical transparency."
+            title: t("Strategic Partnership", "Colaboración Estratégica"),
+            content: t(
+                "I bridge the gap between business objectives and technical possibility through rapid iteration and radical transparency.",
+                "Cierro la brecha entre los objetivos de negocio y la posibilidad técnica mediante iteración rápida y transparencia radical."
+            )
         }
     ];
 
@@ -97,15 +114,15 @@ function AboutMe() {
                     {/* DETAILS ASIDE */}
                     <aside className="space-y-12 lg:pl-12 border-t lg:border-t-0 lg:border-l border-white/5 pt-10 lg:pt-0">
                         <div className="space-y-6">
-                            <m.h3 initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 1 }} className="text-slate-500 text-xs font-bold uppercase tracking-[0.2em]">Education</m.h3>
+                            <m.h3 initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 1 }} className="text-slate-500 text-xs font-bold uppercase tracking-[0.2em]">{t("Education", "Educación")}</m.h3>
                             <div className="space-y-6">
                                 <m.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 1.1 }} className="space-y-1">
-                                    <p className="text-lg font-medium text-slate-200">Animation Design</p>
+                                    <p className="text-lg font-medium text-slate-200">{t("Animation Design", "Diseño de Animación")}</p>
                                     <p className="text-sm text-slate-500">Uni. Tecnologica de Mexico</p>
                                 </m.div>
                                 <m.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 1.2 }} className="space-y-1">
                                     <p className="text-lg font-medium text-slate-200 text-primary flex items-center gap-2">
-                                        UX Design
+                                        {t("UX Design", "Diseño UX")}
                                         <Icon icon="solar:verified-check-bold" className="text-lg" />
                                     </p>
                                     <p className="text-sm text-slate-500">Google / Coursera Professional</p>
@@ -114,16 +131,16 @@ function AboutMe() {
                         </div>
 
                         <div className="space-y-6">
-                            <m.h3 initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 1.3 }} className="text-slate-500 text-xs font-bold uppercase tracking-[0.2em]">Current Status</m.h3>
+                            <m.h3 initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 1.3 }} className="text-slate-500 text-xs font-bold uppercase tracking-[0.2em]">{t("Current Status", "Estado Actual")}</m.h3>
                             <m.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 1.4 }} className="space-y-2">
                                 <div className="flex items-center gap-2 text-emerald-400">
                                     <span className="relative flex h-2 w-2">
                                         <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
                                         <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-500"></span>
                                     </span>
-                                    <p className="text-lg font-medium">Available for Remote Opportunities</p>
+                                    <p className="text-lg font-medium">{t("Available for Remote Opportunities", "Disponible para Proyectos Remotos")}</p>
                                 </div>
-                                <p className="text-sm text-slate-500">Open to international collaborations.</p>
+                                <p className="text-sm text-slate-500">{t("Open to international collaborations.", "Abierto a colaboraciones internacionales.")}</p>
                             </m.div>
                         </div>
                     </aside>
@@ -133,7 +150,7 @@ function AboutMe() {
             {/* Bottom Decorative Text */}
             <div className="absolute bottom-6 left-0 right-0 text-center pointer-events-none select-none z-0 opacity-[0.03]">
                 <span className="text-[10vw] font-medium tracking-tighter whitespace-nowrap">
-                    Context & Intent.
+                    {t("Context & Intent.", "Contexto e Intención.")}
                 </span>
             </div>
         </main>

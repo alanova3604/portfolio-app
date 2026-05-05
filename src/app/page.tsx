@@ -1,278 +1,217 @@
 "use client";
 
-import { useCallback, useEffect, Suspense, useMemo } from "react";
-import { useRouter, useSearchParams } from "next/navigation";
-import { Icon } from "@iconify/react";
-import { m } from "framer-motion";
-import { AnimatePresence, LayoutGroup } from "motion/react";
-import GeometricPattern from "@/components/GeometricPattern";
-import ProjectCard from "@/components/Project";
+import { useEffect, useState, useRef, useCallback } from "react";
+import Image from "next/image";
+import Link from "next/link";
 import { projects } from "@/data/projects";
+import AboutMe from "./about-me/page";
+import Contact from "./contact/page";
+import { useLang } from "@/context/LangContext";
 
-function HomeContent() {
-  const headline = "Designing products that bridge user needs and business goals.";
-  const router = useRouter();
-  const searchParams = useSearchParams();
+// Build sections dynamically from project data
+const projectSections = projects.map((p) => ({
+  id: p.slug,
+  title: p.title,
+  bgImage: p.banner,
+  logo: p.logo,
+  subtitle: p.subtitle,
+  color: p.color,
+  type: "project" as const,
+}));
 
-  // Convert title to URL-safe slug
-  const toSlug = (title: string) =>
-    title.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/(^-|-$)/g, "");
+const staticSections = [
+  { id: "about-me",  title: "About Me", type: "about"   as const },
+  { id: "contact",   title: "Contact",  type: "contact" as const },
+];
 
-  // Derive selected from URL param — no extra state needed
-  const categoryParam = searchParams.get("category");
-
-  // Restore last category from sessionStorage when landing on / with no param
-  useEffect(() => {
-    if (!categoryParam) {
-      const saved = sessionStorage.getItem("lastCategory");
-      if (saved) {
-        const params = new URLSearchParams();
-        params.set("category", saved);
-        router.replace(`/?${params.toString()}`, { scroll: false });
-      }
-    }
-  // Only run on mount
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
-
-  // Keep sessionStorage in sync with the URL param
-  useEffect(() => {
-    if (categoryParam) {
-      sessionStorage.setItem("lastCategory", categoryParam);
-    } else {
-      sessionStorage.removeItem("lastCategory");
-    }
-  }, [categoryParam]);
-
-  const services = [
-    {
-      title: "SaaS",
-      description: "Scalable workflows for complex SaaS platforms.",
-      icon: "solar:widget-bold-duotone",
-    },
-    {
-      title: "E-commerce",
-      description: "High-conversion storefronts and digital experiences.",
-      icon: "solar:cart-large-minimalistic-bold-duotone",
-    },
-    {
-      title: "Landing Page",
-      description: "Strategic pages designed to drive action and conversion.",
-      icon: "solar:layers-minimalistic-bold-duotone",
-    },
-  ];
-
-  const selected = services.find((s) => toSlug(s.title) === categoryParam)?.title ?? null;
-  const isSelected = selected !== null;
-
-  // Filter projects based on active category
-  const filteredProjects = useMemo(() => {
-    if (!isSelected) return [];
-    return projects.filter(p => p.category === selected);
-  }, [isSelected, selected]);
-
-  const headlineDelay = headline.length * 0.05;
-
-  const handleSelect = useCallback(
-    (title: string) => {
-      const slug = toSlug(title);
-      const isActive = categoryParam === slug;
-      const params = new URLSearchParams(searchParams.toString());
-      if (isActive) {
-        params.delete("category");
-      } else {
-        params.set("category", slug);
-      }
-      router.push(`/?${params.toString()}`, { scroll: false });
-    },
-    [categoryParam, router, searchParams]
-  );
-
-  return (
-    <main className="relative min-h-screen w-full bg-gradient-to-br from-black to-zinc-900 overflow-hidden flex flex-col pt-24 pb-8 px-6 md:px-12 lg:px-24">
-      {/* Background Elements */}
-      <GeometricPattern />
-
-      {/* Diagonal Glow Animation */}
-      <m.div
-        initial={{ top: "-20%", left: "-20%", opacity: 0 }}
-        animate={{ top: ["-20%", "120%"], left: ["-20%", "120%"], opacity: [0, 0.15, 0] }}
-        transition={{ duration: 10, repeat: Infinity, ease: "linear", repeatDelay: 2 }}
-        className="absolute w-[800px] h-[800px] bg-primary/20 rounded-full blur-[150px] pointer-events-none z-0"
-      />
-      <div className="absolute -top-[300px] -right-[500px] w-[1000px] h-[1000px] bg-zinc-700/10 rounded-full blur-[120px] pointer-events-none" />
-
-      <LayoutGroup>
-
-        {/* ───── CONTENT WRAPPER: Handles both states for smooth morphing ───── */}
-        <AnimatePresence mode="popLayout" initial={false}>
-          {!isSelected ? (
-            <m.div
-              key="default-view"
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
-              transition={{ duration: 0.4 }}
-              className="relative z-10 flex flex-col items-center text-center justify-center flex-1 gap-12 md:gap-16 max-w-[1800px] w-full mx-auto"
-            >
-              {/* Headline */}
-              <m.div
-                initial={{ opacity: 0, scale: 0.98 }}
-                animate={{ opacity: 1, scale: 1 }}
-                transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
-                className="flex flex-col gap-4 md:gap-6"
-              >
-                <h1 className="text-4xl md:text-6xl lg:text-7xl xl:text-8xl font-medium text-slate-400 tracking-tight leading-tight">
-                  {headline.split("").map((char, index) => (
-                    <m.span
-                      key={index}
-                      initial={{ opacity: 0 }}
-                      animate={{ opacity: 1 }}
-                      transition={{ duration: 0.05, delay: index * 0.03 }}
-                    >
-                      {char}
-                    </m.span>
-                  ))}
-                </h1>
-                <m.p
-                  initial={{ opacity: 0 }}
-                  animate={{ opacity: 1 }}
-                  transition={{ duration: 1, delay: headlineDelay + 0.2 }}
-                  className="text-lg md:text-2xl lg:text-3xl font-medium text-slate-500/80"
-                >
-                  Solving complex problems through design and craft.
-                </m.p>
-              </m.div>
-
-              {/* Cards grid */}
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-10 w-full">
-                {services.map((service, index) => (
-                  <m.div
-                    key={service.title}
-                    layoutId={`card-${service.title}`}
-                    initial={{ opacity: 0, scale: 0.9 }}
-                    animate={{ opacity: 1, scale: 1 }}
-                    exit={{ opacity: 0, scale: 0.9 }}
-                    transition={{
-                      duration: 0.5,
-                      delay: headlineDelay + 0.5 + index * 0.1,
-                      layout: { type: "spring", stiffness: 300, damping: 30 },
-                    }}
-                    onClick={() => handleSelect(service.title)}
-                    style={{ borderRadius: 24 }}
-                    className="group relative h-[200px] md:h-[260px] lg:h-[300px] p-6 md:p-10 flex flex-col items-center justify-center gap-4 bg-white/5 border border-white/5 backdrop-blur-sm shadow-2xl overflow-hidden cursor-pointer hover:bg-white/[0.08] transition-colors duration-300"
-                  >
-                    <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none bg-gradient-to-tr from-transparent via-white/5 to-transparent" />
-                    <m.span layoutId={`icon-${service.title}`}>
-                      <Icon icon={service.icon} className="text-5xl md:text-6xl text-primary transition-transform duration-500 group-hover:scale-105" />
-                    </m.span>
-                    <div className="space-y-2 text-center">
-                      <m.h3 layoutId={`title-${service.title}`} className="text-xl md:text-2xl font-bold text-white leading-none">
-                        {service.title}
-                      </m.h3>
-                      <p className="text-neutral-400 text-sm md:text-base font-medium leading-relaxed">
-                        {service.description}
-                      </p>
-                    </div>
-                  </m.div>
-                ))}
-              </div>
-            </m.div>
-          ) : (
-            <m.div
-              key="selected-view"
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
-              transition={{ duration: 0.4 }}
-              className="relative z-10 flex flex-col flex-1 gap-6 max-w-[1800px] w-full mx-auto"
-            >
-              {/* Filter Pills row */}
-              <div className="flex items-center gap-3">
-                {services.map((service) => {
-                  const isActive = categoryParam === toSlug(service.title);
-                  return (
-                    <m.button
-                      key={service.title}
-                      layoutId={`card-${service.title}`}
-                      onClick={() => handleSelect(service.title)}
-                      style={{ borderRadius: 999 }}
-                      transition={{ type: "spring", stiffness: 300, damping: 30 }}
-                      className={`flex items-center gap-2.5 px-5 py-3 text-sm font-semibold backdrop-blur-md transition-colors duration-300 cursor-pointer ${
-                        isActive
-                          ? "bg-primary/20 text-white border border-primary/40 shadow-[0_0_20px_rgba(0,122,255,0.25)]"
-                          : "bg-white/5 text-slate-400 border border-white/5 hover:bg-white/10 hover:text-white"
-                      }`}
-                    >
-                      <m.span layoutId={`icon-${service.title}`}>
-                        <Icon icon={service.icon} className="text-base" />
-                      </m.span>
-                      <m.span layoutId={`title-${service.title}`} className="whitespace-nowrap">
-                        {service.title}
-                      </m.span>
-                    </m.button>
-                  );
-                })}
-              </div>
-
-              <m.div
-                initial="hidden"
-                animate="visible"
-                variants={{
-                  hidden: { opacity: 0 },
-                  visible: { 
-                    opacity: 1,
-                    transition: { staggerChildren: 0.1, delayChildren: 0.2 }
-                  }
-                }}
-                className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 flex-1 min-h-[400px]"
-              >
-                {filteredProjects.length > 0 ? (
-                  filteredProjects.map((project, index) => (
-                    <ProjectCard 
-                      key={project.slug} 
-                      project={project}
-                      index={index}
-                    />
-                  ))
-                ) : (
-                  <m.div 
-                    initial={{ opacity: 0, y: 10 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    className="col-span-full py-20 flex flex-col items-center justify-center text-center gap-6"
-                  >
-                    <div className="w-16 h-16 rounded-full bg-white/5 flex items-center justify-center border border-white/10">
-                      <Icon icon="solar:box-minimalistic-bold-duotone" className="text-3xl text-white/20" />
-                    </div>
-                    <div className="space-y-2">
-                      <h3 className="text-xl font-medium text-white/60">New projects coming soon</h3>
-                      <p className="text-slate-500 max-w-sm mx-auto">
-                        We are currently working on adding new projects to this category. Stay tuned for updates!
-                      </p>
-                    </div>
-                  </m.div>
-                )}
-              </m.div>
-            </m.div>
-          )}
-        </AnimatePresence>
-
-      </LayoutGroup>
-
-      {/* Bottom Decorative Text */}
-      <div className="absolute bottom-0 left-0 right-0 pointer-events-none select-none z-0 opacity-[0.05]">
-        <span className="text-[10vw] font-medium tracking-tighter whitespace-nowrap">
-          Architecture & Intuition.
-        </span>
-      </div>
-    </main>
-  );
-}
+const allSections = [...projectSections, ...staticSections];
 
 export default function Home() {
+  const [activeIndex, setActiveIndex] = useState(0);
+  const isScrolling = useRef(false);
+  const touchStartY = useRef(0);
+  const { t } = useLang();
+
+  const goToSection = useCallback(
+    (index: number) => {
+      const clamped = Math.max(0, Math.min(allSections.length - 1, index));
+      if (clamped === activeIndex) return;
+
+      const element = document.getElementById(allSections[clamped].id);
+      if (element) {
+        isScrolling.current = true;
+        element.scrollIntoView({ behavior: "smooth" });
+        setActiveIndex(clamped);
+        setTimeout(() => { isScrolling.current = false; }, 700);
+      }
+    },
+    [activeIndex]
+  );
+
+  // Wheel — skip hijack when the target is inside a scrollable container (e.g. modal)
+  useEffect(() => {
+    const isInsideScrollable = (target: EventTarget | null): boolean => {
+      let el = target as HTMLElement | null;
+      while (el && el !== document.body) {
+        if (
+          el !== document.documentElement &&
+          (el.scrollHeight > el.clientHeight) &&
+          ["auto", "scroll", "overlay"].includes(getComputedStyle(el).overflowY)
+        ) return true;
+        el = el.parentElement;
+      }
+      return false;
+    };
+
+    const handleWheel = (e: WheelEvent) => {
+      if (isInsideScrollable(e.target)) return; // let scrollable containers handle it
+      e.preventDefault();
+      if (isScrolling.current) return;
+      if (e.deltaY > 30)       goToSection(activeIndex + 1);
+      else if (e.deltaY < -30) goToSection(activeIndex - 1);
+    };
+    window.addEventListener("wheel", handleWheel, { passive: false });
+    return () => window.removeEventListener("wheel", handleWheel);
+  }, [activeIndex, goToSection]);
+
+  // Touch
+  useEffect(() => {
+    const onStart = (e: TouchEvent) => { touchStartY.current = e.touches[0].clientY; };
+    const onEnd   = (e: TouchEvent) => {
+      if (isScrolling.current) return;
+      const delta = touchStartY.current - e.changedTouches[0].clientY;
+      if (delta > 50)       goToSection(activeIndex + 1);
+      else if (delta < -50) goToSection(activeIndex - 1);
+    };
+    window.addEventListener("touchstart", onStart, { passive: true });
+    window.addEventListener("touchend",   onEnd,   { passive: true });
+    return () => {
+      window.removeEventListener("touchstart", onStart);
+      window.removeEventListener("touchend",   onEnd);
+    };
+  }, [activeIndex, goToSection]);
+
+  // Keyboard
+  useEffect(() => {
+    const onKey = (e: KeyboardEvent) => {
+      if (isScrolling.current) return;
+      if (e.key === "ArrowDown" || e.key === "PageDown") { e.preventDefault(); goToSection(activeIndex + 1); }
+      else if (e.key === "ArrowUp" || e.key === "PageUp"){ e.preventDefault(); goToSection(activeIndex - 1); }
+    };
+    window.addEventListener("keydown", onKey);
+    return () => window.removeEventListener("keydown", onKey);
+  }, [activeIndex, goToSection]);
+
   return (
-    <Suspense>
-      <HomeContent />
-    </Suspense>
+    <main className="relative bg-black overflow-hidden" style={{ height: "100dvh" }}>
+
+      {/* ── Fixed Right Navigation ── */}
+      <nav
+        className="fixed right-6 md:right-12 top-1/2 -translate-y-1/2 z-50 flex flex-col gap-5 items-end"
+        style={{ fontFamily: "var(--font-ligconsolata)" }}
+      >
+        {allSections.map((section, index) => (
+          <button
+            key={section.id}
+            onClick={() => goToSection(index)}
+            className={`transition-all duration-300 text-right uppercase tracking-widest text-xs md:text-sm ${
+              activeIndex === index
+                ? "text-white opacity-100 font-bold translate-x-0"
+                : "text-white opacity-40 font-normal translate-x-2 hover:opacity-80 hover:translate-x-0"
+            }`}
+          >
+            {section.title}
+          </button>
+        ))}
+      </nav>
+
+      {/* ── Sections ── */}
+      <div className="h-full overflow-hidden">
+        {allSections.map((section, index) => {
+
+          /* ── About Me ── */
+          if (section.type === "about") {
+            return (
+              <div key={section.id} id={section.id} className="w-full h-screen">
+                <AboutMe />
+              </div>
+            );
+          }
+
+          /* ── Contact ── */
+          if (section.type === "contact") {
+            return (
+              <div key={section.id} id={section.id} className="w-full h-screen">
+                <Contact />
+              </div>
+            );
+          }
+
+          /* ── Project Section ── */
+          const project = projects[index]; // same order
+          return (
+            <div
+              key={section.id}
+              id={section.id}
+              className="h-screen w-full relative flex flex-col justify-end p-8 md:p-16 lg:p-24 overflow-hidden"
+            >
+              {/* Background */}
+              <img
+                src={section.bgImage}
+                alt={section.title}
+                className="absolute inset-0 w-full h-full object-cover object-center z-0"
+              />
+
+              {/* Gradient overlay — heavier at bottom for text legibility */}
+              <div className="absolute inset-0 z-10 bg-gradient-to-t from-black via-black/60 to-black/20" />
+
+              {/* Content */}
+              <div className="relative z-20 flex flex-col gap-6 max-w-2xl">
+                {/* Logo */}
+                <div className="relative h-10 w-40 md:h-14 md:w-56">
+                  <Image
+                    src={section.logo}
+                    alt={`${section.title} logo`}
+                    fill
+                    className="object-contain object-left drop-shadow-lg"
+                  />
+                </div>
+
+                {/* Subtitle */}
+                <p
+                  className="text-white/70 text-base md:text-lg tracking-wide"
+                  style={{ fontFamily: "var(--font-ligconsolata)" }}
+                >
+                  {section.subtitle}
+                </p>
+
+                {/* CTA */}
+                <Link
+                  href={`/projects/${section.id}`}
+                  className="group inline-flex items-center gap-3 self-start border border-white/30 hover:border-white text-white text-sm uppercase tracking-widest px-6 py-3 rounded-full transition-all duration-300 hover:bg-white hover:text-black backdrop-blur-sm"
+                  style={{ fontFamily: "var(--font-ligconsolata)" }}
+                >
+                  {t("View Case Study", "Ver Caso de Estudio")}
+                  <svg
+                    className="w-4 h-4 transition-transform duration-300 group-hover:translate-x-1 group-hover:-translate-y-0.5"
+                    fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}
+                  >
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M7 17L17 7M17 7H7M17 7v10" />
+                  </svg>
+                </Link>
+              </div>
+
+              {/* Subtle project index */}
+              <span
+                className="absolute bottom-8 right-10 md:right-16 z-20 text-white/15 text-xs tabular-nums"
+                style={{ fontFamily: "var(--font-ligconsolata)" }}
+              >
+                {String(index + 1).padStart(2, "0")} / {String(projectSections.length).padStart(2, "0")}
+              </span>
+            </div>
+          );
+        })}
+      </div>
+    </main>
   );
 }

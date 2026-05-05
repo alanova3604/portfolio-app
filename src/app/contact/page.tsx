@@ -4,9 +4,11 @@ import { useState } from "react";
 import { m } from "framer-motion";
 import { Icon } from "@iconify/react";
 import GeometricPattern from "@/components/GeometricPattern";
+import { useLang } from "@/context/LangContext";
 
 function Contact() {
-    const headline = "Start a Strategic Conversation";
+    const { t } = useLang();
+    const headline = t("Start a Strategic Conversation", "Iniciemos una Conversación Estratégica");
     
     // 1. Estados para el formulario, errores y estatus de envío
     const [formData, setFormData] = useState({
@@ -38,13 +40,13 @@ function Contact() {
         e.preventDefault();
 
         const newErrors: { [key: string]: string } = {};
-        if (!formData.name.trim()) newErrors.name = "Name is required";
+        if (!formData.name.trim()) newErrors.name = t("Name is required", "El nombre es requerido");
         if (!formData.email.trim()) {
-            newErrors.email = "Email is required";
+            newErrors.email = t("Email is required", "El email es requerido");
         } else if (!/\S+@\S+\.\S+/.test(formData.email)) {
-            newErrors.email = "Invalid email format";
+            newErrors.email = t("Invalid email format", "Formato de email inválido");
         }
-        if (!formData.message.trim()) newErrors.message = "Message is required";
+        if (!formData.message.trim()) newErrors.message = t("Message is required", "El mensaje es requerido");
 
         if (Object.keys(newErrors).length > 0) {
             setErrors(newErrors);
@@ -134,7 +136,7 @@ function Contact() {
                                     value={formData.name}
                                     onChange={handleChange}
                                     className="w-full bg-transparent outline-none text-foreground text-lg"
-                                    placeholder="Enter your name"
+                                    placeholder={t("Enter your name", "Ingresa tu nombre")}
                                 />
                             </m.div>
 
@@ -166,7 +168,7 @@ function Contact() {
                             transition={{ delay: headline.length * 0.05 + 0.4 }}
                             className="relative group p-4 rounded-2xl bg-white/[0.03] border border-white/5 backdrop-blur-md transition-all duration-300 hover:border-white/10 hover:bg-white/[0.05]"
                         >
-                            <label className="text-xs font-semibold uppercase tracking-wider mb-1 block text-slate-500">Phone Number (Optional)</label>
+                            <label className="text-xs font-semibold uppercase tracking-wider mb-1 block text-slate-500">{t("Phone Number (Optional)", "Teléfono (Opcional)")}</label>
                             <input
                                 type="tel"
                                 name="phone"
@@ -193,7 +195,7 @@ function Contact() {
                                 value={formData.message}
                                 onChange={handleChange}
                                 className="w-full bg-transparent outline-none text-foreground text-lg resize-none"
-                                placeholder="Describe the problem we're solving..."
+                                placeholder={t("Describe the problem we're solving...", "Describe el problema que vamos a resolver...")}
                             ></textarea>
                         </m.div>
 
@@ -214,20 +216,20 @@ function Contact() {
                                 {status === 'loading' ? (
                                     <Icon icon="eos-icons:loading" className="text-2xl" />
                                 ) : status === 'success' ? (
-                                    "Message Sent!"
+                                    t("Message Sent!", "¡Mensaje Enviado!")
                                 ) : (
                                     <span className="flex items-center gap-3">
-                                        Send Message
+                                        {t("Send Message", "Enviar Mensaje")}
                                         <Icon icon="solar:round-arrow-right-up-bold" className="text-2xl transition-transform group-hover:translate-x-1 group-hover:-translate-y-1" />
                                     </span>
                                 )}
                             </button>
 
                             {status === 'success' && (
-                                <m.span initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="text-emerald-400 font-medium">Thanks! I'll be in touch soon.</m.span>
+                                <m.span initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="text-emerald-400 font-medium">{t("Thanks! I'll be in touch soon.", "¡Gracias! Estaré en contacto pronto.")}</m.span>
                             )}
                             {status === 'error' && (
-                                <m.span initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="text-red-400 font-medium">Something went wrong. Try again.</m.span>
+                                <m.span initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="text-red-400 font-medium">{t("Something went wrong. Try again.", "Algo salió mal. Inténtalo de nuevo.")}</m.span>
                             )}
                         </m.div>
                     </form>
@@ -235,7 +237,7 @@ function Contact() {
                     {/* CONTACT INFO ASIDE */}
                     <aside className="space-y-10 lg:pl-12 border-t lg:border-t-0 lg:border-l border-white/5 pt-10 lg:pt-0 lg:ml-auto">
                         <div className="space-y-3">
-                            <m.p initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 1.2 }} className="text-slate-500 text-xs font-bold uppercase tracking-[0.2em]">Contact Details</m.p>
+                            <m.p initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 1.2 }} className="text-slate-500 text-xs font-bold uppercase tracking-[0.2em]">{t("Contact Details", "Datos de Contacto")}</m.p>
                             <m.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 1.3 }} className="space-y-1 text-2xl md:text-3xl font-medium text-slate-200">
                                 <p>Alan Valdez</p>
                                 <p className="text-slate-500">Guadalajara, Mexico</p>
@@ -243,7 +245,7 @@ function Contact() {
                         </div>
 
                         <div className="space-y-3">
-                            <m.p initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 1.4 }} className="text-slate-500 text-xs font-bold uppercase tracking-[0.2em]">Let's Connect</m.p>
+                            <m.p initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 1.4 }} className="text-slate-500 text-xs font-bold uppercase tracking-[0.2em]">{t("Let's Connect", "Conectémonos")}</m.p>
                             <ul className="space-y-4">
                                 <m.li initial={{ opacity: 0, x: 10 }} animate={{ opacity: 1, x: 0 }} transition={{ delay: 1.5 }}>
                                     <a href="https://www.linkedin.com/in/alanvalcala" target="_blank" rel="noreferrer" className="group flex items-center gap-3 text-xl text-slate-300 hover:text-primary transition-all duration-300">
